@@ -35,7 +35,7 @@ namespace hypercompress
                 stopwatch.Reset();
 
                 //Work Desktop Path
-                System.IO.File.WriteAllLines(@"C:\projects\hypercompress\BufferResults.txt", bufferArray.Select(byteValue => byteValue.ToString()).ToArray());
+                System.IO.File.WriteAllLines(@"C:\projects\hypercompress\results\BufferResults.txt", bufferArray.Select(byteValue => byteValue.ToString()).ToArray());
 
 
 
@@ -49,7 +49,7 @@ namespace hypercompress
                 stopwatch.Reset();
 
                 //Work Desktop Path
-                System.IO.File.WriteAllLines(@"C:\projects\hypercompress\RNGResults.txt", rngArray.Select(byteValue => byteValue.ToString()).ToArray());
+                System.IO.File.WriteAllLines(@"C:\projects\hypercompress\results\RNGResults.txt", rngArray.Select(byteValue => byteValue.ToString()).ToArray());
 
 
 
