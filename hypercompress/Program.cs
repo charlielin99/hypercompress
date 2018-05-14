@@ -21,11 +21,18 @@ namespace hypercompress
             const int size = 32;
             var stopwatch = Stopwatch.StartNew();
             var myRandom = new Random();
+            var lcgRandom = new LCGGenerator();
             var baseBufferArray = new byte[size];
             var newBufferArray = new byte[size];
             var rngArray = new byte[size];
+            var lcgArray = new byte[size];
 
-            for (var i = 0; i < 100; i++)
+            double totaltime1 = 0;
+            double totaltime2 = 0;
+            double totaltime3 = 0;
+
+
+            for (var i = 0; i <100; i++)
             {
 
                 //buffer method
@@ -40,10 +47,10 @@ namespace hypercompress
 
                 
                 File.AppendAllLines(basePath+"BufferResults.txt", newBufferArray.Select(byteValue => byteValue.ToString()).ToArray());
-                File.AppendAllText(basePath+"BufferResults.txt", "@" + System.Environment.NewLine); 
-                
-                
+                File.AppendAllText(basePath+"BufferResults.txt", "@" + System.Environment.NewLine); //makes it easier to clean data in file with python split method
 
+
+             
 
                 //rng method
                 stopwatch.Start();
@@ -58,20 +65,45 @@ namespace hypercompress
 
 
 
+             
+
+                //lcg method
+                stopwatch.Start();
+                for (var j = 0; j < size; j++)
+                {
+                    var value = lcgRandom.Next(255);
+                    lcgArray[j] = (BitConverter.GetBytes(value))[0];
+                }
+                stopwatch.Stop();
+                var time3 = stopwatch.Elapsed;
+                stopwatch.Reset();
 
 
+                File.AppendAllLines(basePath + "LCGResults.txt", lcgArray.Select(byteValue => byteValue.ToString()).ToArray());
+                File.AppendAllText(basePath + "LCGResults.txt", "@" + System.Environment.NewLine);
 
 
+                totaltime1 += time1.TotalMilliseconds;
+                totaltime2 += time2.TotalMilliseconds;
+                totaltime3 += time3.TotalMilliseconds;
 
-                //var total = time2.TotalMilliseconds - time1.TotalMilliseconds;
-                //Console.WriteLine(total);
-                //Thread.Sleep(400); //modify based on web traffic
+
+                Thread.Sleep(1000); //modify based on web traffic
             }
 
-            
+            Console.WriteLine("Time 1: " + totaltime1/100);
+            Console.WriteLine("Time 2: " + totaltime2/100);
+            Console.WriteLine("Time 3: " + totaltime3/100);
 
 
-            while (true);
+
+            //clearFile(basePath,"BufferResults.txt");
+            //clearFile(basePath, "RNGResults.txt");
+            //clearFile(basePath, "LCGResults.txt");
+
+            Console.ReadLine();
+
+
         }
 
       
@@ -83,11 +115,30 @@ namespace hypercompress
     }
 }
 
-//var str = System.Text.Encoding.Default.GetString(modified);
-//Console.WriteLine(str);
 
-//string converted = System.Text.Encoding.UTF8.GetString(modified, 0, modified.Length);
-//Console.WriteLine(converted);
 
-//Console.WriteLine(System.Convert.ToBase64String(modified, 0, modified.Length));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// a few system converts, may be handy
+/*
+var str = System.Text.Encoding.Default.GetString(modified);
+Console.WriteLine(str);
+
+string converted = System.Text.Encoding.UTF8.GetString(modified, 0, modified.Length);
+Console.WriteLine(converted);
+
+Console.WriteLine(System.Convert.ToBase64String(modified, 0, modified.Length));
+*/
