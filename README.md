@@ -1,5 +1,6 @@
 # hypercompress
 
+<h1> WORK IN PROGRESS </h1>
 Generates the common unsigned byte array of size 32 used in web apps based on the metrics of:
 1. Security/Randomness of values
 2. Speed of Generation depending on number of values needed per second
